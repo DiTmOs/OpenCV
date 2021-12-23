@@ -6,42 +6,50 @@
 using namespace std;
 using namespace cv;
 
-int main(int argc, char** argv)
+int main()
 {
-    Mat im_rgb = imread("yatorogod.jpg");
+    Mat picture = imread("yatorogod.jpg");
 
-    if (im_rgb.empty()) {
-        cout << "Error" << endl;
+    if (picture.empty()) {
+        cout << "Missing picture!" << endl;
         return -1;
     }
-    resize(im_rgb, im_rgb ,Size(), 0.5 , 0.5);
-    imshow("original", im_rgb);
+    resize(picture , picture ,Size(), 0.5 , 0.5);
+
+    // отображение оригинальной картинки
+    imshow("Оriginal Yatoro", picture);
     waitKey(0);
 
-    Mat im_black_and_white;
-    cvtColor(im_rgb, im_black_and_white, COLOR_RGBA2GRAY);
-    imshow("black_and_white", im_black_and_white);
+    //отображение чёрно-белой версии изображения
+    Mat black_and_white_picture;
+    cvtColor(picture, black_and_white_picture, COLOR_RGBA2GRAY);
+    imshow("Black and white Yatoro", black_and_white_picture);
     waitKey(0);
 
-    Mat im_clr;
-    cvtColor(im_rgb, im_clr, COLOR_BGR2YUV);
-    imshow("YUV", im_clr);
+    //отображение YUV версии изображения
+    Mat yuv_picture;
+    cvtColor(picture, yuv_picture, COLOR_BGR2YUV);
+    imshow("YUV Yatoro", yuv_picture);
     waitKey(0);
 
-    Mat im_canny;
-    Canny(im_rgb, im_canny, 100, 200, 3);
-    imshow("Canny", im_canny);
+    //оторажение изображения в схеме HSV
+    Mat hsv_picture;
+    cvtColor(picture, hsv_picture, COLOR_BGR2HSV);
+    imshow("HSV Yatoro", hsv_picture);
     waitKey(0);
 
-    Mat im_gauss;
-    GaussianBlur(im_rgb, im_gauss, Size(7, 7), 0);
-    imshow("Gauss", im_gauss);
+    //отображение краев обьектов
+    Mat edge_picture;
+    Canny(picture, edge_picture, 100, 200);
+    imshow("Edge Yatoro", edge_picture);
     waitKey(0);
 
-    Mat im_hsv;
-    cvtColor(im_rgb, im_hsv, COLOR_BGR2HSV);
-    imshow("HSV", im_hsv);
+    //отображение размытого изображения
+    Mat gauss_picture;
+    GaussianBlur(picture, gauss_picture, Size(15, 15), 0);
+    imshow("Gauss Yatoro", gauss_picture);
     waitKey(0);
+
 
     return 0;
 }
